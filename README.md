@@ -11,9 +11,11 @@ Integrantes: Francisco Sanchez, Agustín Nahuel Bloise, Diego Ezequiel Benítez,
 *python 3  https://www.python.org/downloads/
 
 ##Instalacion
-Para instcion
 Para instalar en Linux
 $ sudo apt-get install python3
 
 ##Correr el prograama
-$ python listado_chesques.py
+$ python listado_chesques.py PANTALLA
+$ python listado_chesques.py CSV
+$ python listado_chesques.py DNI
+$ python listado_chesques.py EMITIDO o DEPOSITADO
