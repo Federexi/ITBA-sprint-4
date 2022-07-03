@@ -1,9 +1,5 @@
 # Batch de cheques - Sprint 4
 
-Grupo 3
-
-## Integrantes: Francisco Sanchez, Agustín Nahuel Bloise, Diego Ezequiel Benítez, Axel Leonel Chacón Ávila y Federico Bidarra.
-
 * Batch de cheques es un script que permite consultar los cheques emitidos y depositados  de un cliente.
 
 ## Dependencias
@@ -28,5 +24,9 @@ $ python listado_chesques.py EMITIDO o DEPOSITADO
 $ python listado_chesques.py PENDIENTE, APROBADO, RECHAZADO
 
 $ python listado_chesques.py (rango de fecha) x-xx-xxxx:yy-yy-yyyy
+
+## Grupo 3
+
+* Integrantes: Francisco Sanchez, Agustín Nahuel Bloise, Diego Ezequiel Benítez, Axel Leonel Chacón Ávila y Federico Bidarra.
 
 
