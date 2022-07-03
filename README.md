@@ -13,17 +13,21 @@ $ sudo apt-get install python3
 
 ## Correr el programa
 
-$ python listado_chesques.py PANTALLA
+$ python listado_chesques.py PANTALLA  (Obligatorio)
 
-$ python listado_chesques.py CSV
+$ python listado_chesques.py CSV  (Obligatorio)
 
-$ python listado_chesques.py (nro de dni)
+$ python listado_chesques.py (nro de dni) (Obligatorio)
 
-$ python listado_chesques.py EMITIDO o DEPOSITADO
+$ python listado_chesques.py EMITIDO o DEPOSITADO 
 
-$ python listado_chesques.py PENDIENTE, APROBADO, RECHAZADO
+$ python listado_chesques.py PENDIENTE, APROBADO, RECHAZADO  (Opcional)
 
-$ python listado_chesques.py (rango de fecha) x-xx-xxxx:yy-yy-yyyy
+$ python listado_chesques.py (rango de fecha) x-xx-xxxx:yy-yy-yyyy  (Opcional)
+
+
+* Los comando se ejecutan en una misma linea
+
 
 ## Grupo 3
 
