@@ -21,7 +21,12 @@ $ python listado_chesques.py PANTALLA
 
 $ python listado_chesques.py CSV
 
-$ python listado_chesques.py DNI
+$ python listado_chesques.py (nro de dni)
 
 $ python listado_chesques.py EMITIDO o DEPOSITADO
+
+$ python listado_chesques.py PENDIENTE, APROBADO, RECHAZADO
+
+$ python listado_chesques.py (rango de fecha) x-xx-xxxx:yy-yy-yyyy
+
 
