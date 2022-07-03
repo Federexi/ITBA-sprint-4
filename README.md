@@ -9,6 +9,7 @@
 ## Instalacion
 
 Para instalar en Linux
+
 $ sudo apt-get install python3
 
 ## Correr el programa
