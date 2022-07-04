@@ -14,6 +14,7 @@ argumentos = sys.argv #guardo en variable los datos pasados por terminal
 # estado = argumentos[5]
 # rangoFecha = argumentos[6]
 
+
 if 5 <= len(argumentos) <= 7: #Chequea que la cantidad de arg sea correcta 
     
     archivo = argumentos[1]
@@ -29,7 +30,7 @@ if 5 <= len(argumentos) <= 7: #Chequea que la cantidad de arg sea correcta
             
             dni = argumentos[2]
             listaFiltro1 = []
-            for index, l in enumerate(lista): #filtro por dni creando una nueva lista 
+            for l in lista: #filtro por dni creando una nueva lista 
                 if dni == l[8]:
                     listaFiltro1.append(l)
             if listaFiltro1 == []: #Chequea si el dni existe sino avisa por pantalla y da error
@@ -38,7 +39,7 @@ if 5 <= len(argumentos) <= 7: #Chequea que la cantidad de arg sea correcta
             
             tipo = argumentos[4].upper()
             listaFiltro2 = []
-            for index, l in enumerate(listaFiltro1): #filtro por tipo creando una nueva lista 
+            for l in listaFiltro1: #filtro por tipo creando una nueva lista 
                 if tipo == l[9]:
                     listaFiltro2.append(l)
             if tipo != 'EMITIDO' and tipo != 'DEPOSITADO':
@@ -58,7 +59,7 @@ if 5 <= len(argumentos) <= 7: #Chequea que la cantidad de arg sea correcta
                 if not tieneNum:
                     estado = argumentos[5].upper()
                     listaFiltro3 = []
-                    for index, l in enumerate(listaFiltro2): #filtro por estado creando una nueva lista 
+                    for l in listaFiltro2: #filtro por estado creando una nueva lista 
                         if estado == l[10]:
                             listaFiltro3.append(l)
                     if estado != 'PENDIENTE' and estado != 'APROBADO' and estado != 'RECHAZADO':
@@ -81,7 +82,7 @@ if 5 <= len(argumentos) <= 7: #Chequea que la cantidad de arg sea correcta
                         hastaDate = datetime.datetime.strptime(hastaFiltered, "%d-%m-%Y")
                         desdeTimestamp = int(round(desdeDate.timestamp()))
                         hastaTimestamp = int(round(hastaDate.timestamp()))
-                        for index, l in enumerate(listaFiltro2): #filtro por fecha creando una nueva lista
+                        for l in listaFiltro2: #filtro por fecha creando una nueva lista
                             if desdeTimestamp <= int(l[6]) <= hastaTimestamp:
                                 listaFiltro3.append(l)
                         if listaFiltro3 == []: #Chequea si en el rango de fecha existen, sino avisa por pantalla y da error
@@ -106,7 +107,7 @@ if 5 <= len(argumentos) <= 7: #Chequea que la cantidad de arg sea correcta
                     hastaDate = datetime.datetime.strptime(hastaFiltered, "%d-%m-%Y")
                     desdeTimestamp = int(round(desdeDate.timestamp()))
                     hastaTimestamp = int(round(hastaDate.timestamp()))
-                    for index, l in enumerate(listaFiltro3): #filtro por fecha creando una nueva lista
+                    for l in listaFiltro3: #filtro por fecha creando una nueva lista
                         if desdeTimestamp <= int(l[6]) <= hastaTimestamp:
                             listaFiltro4.append(l)
                     if listaFiltro4 == []: #Chequea si en el rango de fecha existen, sino avisa por pantalla y da error
@@ -136,10 +137,12 @@ if 5 <= len(argumentos) <= 7: #Chequea que la cantidad de arg sea correcta
             
 
             salida = argumentos[3].upper() #determino el formato de salida 
+            
             if salida == 'PANTALLA': #si es pantalla imprime por terminal
                 for num, l in enumerate(listaFiltro5): #recupero los cheques filtrados y los paso como string para una visual mas limpia
                     num = ', '.join(l) 
                     print(num)    
+            
             elif salida == 'CSV': #si es csv creo un timestamp actual
                 tiempo = datetime.datetime.now()
                 timestampActual = int(round(tiempo.timestamp()))
@@ -155,6 +158,7 @@ if 5 <= len(argumentos) <= 7: #Chequea que la cantidad de arg sea correcta
                 with open(FName,'w', newline='') as f: #creo el archivo y lo escribo
                     writer = csv.writer(f)
                     writer.writerows(FContenido)
+            
             else:
                 print('El formato de salida indicado es inválido') #si el parametro pasado en indice 3 no es valido da error
                 exit(1)
