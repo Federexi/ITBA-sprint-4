@@ -36,11 +36,14 @@ if 5 <= len(argumentos) <= 7: #Chequea que la cantidad de arg sea correcta
                 print('No se encontraron cheques de clientes con el DNI indicado')
                 exit(1)
             
-            tipo = argumentos[4]
+            tipo = argumentos[4].upper()
             listaFiltro2 = []
             for index, l in enumerate(listaFiltro1): #filtro por tipo creando una nueva lista 
                 if tipo == l[9]:
                     listaFiltro2.append(l)
+            if tipo != 'EMITIDO' and tipo != 'DEPOSITADO':
+                print('El tipo de cheque indicado es inválido')
+                exit(1)
             if listaFiltro2 == []: #Chequea si el tipo existe sino avisa por pantalla y da error
                 print('No se encontraron cheques de clientes que coincidan con el DNI y el tipo de cheque indicados')
                 exit(1)
@@ -53,11 +56,14 @@ if 5 <= len(argumentos) <= 7: #Chequea que la cantidad de arg sea correcta
                         tieneNum = True
                 
                 if not tieneNum:
-                    estado = argumentos[5]
+                    estado = argumentos[5].upper()
                     listaFiltro3 = []
                     for index, l in enumerate(listaFiltro2): #filtro por estado creando una nueva lista 
                         if estado == l[10]:
                             listaFiltro3.append(l)
+                    if estado != 'PENDIENTE' and estado != 'APROBADO' and estado != 'RECHAZADO':
+                        print('El estado de cheque indicado es inválido')
+                        exit(1)
                     if listaFiltro3 == []: #Chequea si el estado existe sino avisa por pantalla y da error
                         print('No se encontraron cheques de clientes que coincidan con el DNI, el tipo y el estado del cheque indicados')
                         exit(1)
@@ -69,14 +75,15 @@ if 5 <= len(argumentos) <= 7: #Chequea que la cantidad de arg sea correcta
                         divisor = rangoFecha.split(':') # divido el rango de fechas en 2 strings que parseo a timestamp para comparar
                         desde = divisor[0]
                         hasta = divisor[1]
-                        desdeDate = datetime.datetime.strptime(desde, "%d-%m-%Y")
-                        hastaDate = datetime.datetime.strptime(hasta, "%d-%m-%Y")
+                        desdeFiltered = desde.replace("/", "-")
+                        hastaFiltered = hasta.replace("/", "-")
+                        desdeDate = datetime.datetime.strptime(desdeFiltered, "%d-%m-%Y")
+                        hastaDate = datetime.datetime.strptime(hastaFiltered, "%d-%m-%Y")
                         desdeTimestamp = int(round(desdeDate.timestamp()))
                         hastaTimestamp = int(round(hastaDate.timestamp()))
                         for index, l in enumerate(listaFiltro2): #filtro por fecha creando una nueva lista
                             if desdeTimestamp <= int(l[6]) <= hastaTimestamp:
                                 listaFiltro3.append(l)
-                                print(listaFiltro3)
                         if listaFiltro3 == []: #Chequea si en el rango de fecha existen, sino avisa por pantalla y da error
                             print('No se encontraron cheques de clientes que coincidan con el DNI y el tipo en el rango de fecha indicado')
                             exit(1)
@@ -93,14 +100,15 @@ if 5 <= len(argumentos) <= 7: #Chequea que la cantidad de arg sea correcta
                     divisor = rangoFecha.split(':') # divido el rango de fechas en 2 strings que parseo a timestamp para comparar
                     desde = divisor[0]
                     hasta = divisor[1]
-                    desdeDate = datetime.datetime.strptime(desde, "%d-%m-%Y")
-                    hastaDate = datetime.datetime.strptime(hasta, "%d-%m-%Y")
+                    desdeFiltered = desde.replace("/", "-")
+                    hastaFiltered = hasta.replace("/", "-")
+                    desdeDate = datetime.datetime.strptime(desdeFiltered, "%d-%m-%Y")
+                    hastaDate = datetime.datetime.strptime(hastaFiltered, "%d-%m-%Y")
                     desdeTimestamp = int(round(desdeDate.timestamp()))
                     hastaTimestamp = int(round(hastaDate.timestamp()))
                     for index, l in enumerate(listaFiltro3): #filtro por fecha creando una nueva lista
                         if desdeTimestamp <= int(l[6]) <= hastaTimestamp:
                             listaFiltro4.append(l)
-                            print(listaFiltro4)
                     if listaFiltro4 == []: #Chequea si en el rango de fecha existen, sino avisa por pantalla y da error
                             print('No se encontraron cheques de clientes que coincidan con el DNI, el tipo y el estado del cheque en el rango de fecha indicado')
                             exit(1)
@@ -112,25 +120,49 @@ if 5 <= len(argumentos) <= 7: #Chequea que la cantidad de arg sea correcta
 
             
             for index, l in enumerate(listaFiltro1): #filtro por igualdad de numero de cheque segun dni creando una nueva lista
-                if index+1 < len(listaFiltro1):
-                    indice = index + 1
-                    while indice < len(listaFiltro1):   
-                        if l[0] == listaFiltro1[indice][0]:
-                            print('Error: Un cheque de este cliente se encuentra duplicado')
-                            exit(1)
-                        indice = indice +1
+                indice = index + 1
+                while indice < len(listaFiltro1):   
+                    if l[0] == listaFiltro1[indice][0]:
+                        print('Error: Un cheque de este cliente se encuentra duplicado')
+                        exit(1)
+                    indice = indice +1
                 
-            if 'listaFiltro4' in globals() or 'listaFiltro4' in locals():
+            if 'listaFiltro4' in globals() or 'listaFiltro4' in locals(): #si la variable existe la uso como valor para una nueva variable
                 listaFiltro5 = listaFiltro4
             elif 'listaFiltro3' in globals() or 'listaFiltro3' in locals():
                 listaFiltro5 = listaFiltro3
             else:
                 listaFiltro5 = listaFiltro2
             
-            print(listaFiltro5)
+
+            salida = argumentos[3].upper()
+            if salida == 'PANTALLA':
+                print(listaFiltro5)
+            elif salida == 'CSV':
+                tiempo = datetime.datetime.now()
+                timestampActual = int(round(tiempo.timestamp()))
+                FName = dni + '-' + str(timestampActual) + '.csv'
+                FContenido = [['FechaOrigen','FechaPago','NumeroCuentaDestino','Valor']]
+                for index, l in enumerate(listaFiltro5):
+                    index = []
+                    index.append(l[6])
+                    index.append(l[7])
+                    index.append(l[4])
+                    index.append(l[5])
+                    FContenido.append(index)
+                with open(FName,'w') as f:
+                    writer = csv.writer(f)
+                    for l in FContenido:
+                        writer.writerow(l)
+            else:
+                print('El formato de salida indicado es inválido')
+                exit(1)
+
 
 
  
+
+
     else: #Chequea si el archivo existe sino avisa por pantalla y da error
         print('El archivo no existe o no ha indicado el camino hacia él correctamente')
         exit(1)
