@@ -108,10 +108,29 @@ if 5 <= len(argumentos) <= 7: #Chequea que la cantidad de arg sea correcta
                 else:
                     print('Indique un rango de fechas en el formato adecuado')
                     exit(1)
+
+
             
+            for index, l in enumerate(listaFiltro1): #filtro por igualdad de numero de cheque segun dni creando una nueva lista
+                if index+1 < len(listaFiltro1):
+                    indice = index + 1
+                    while indice < len(listaFiltro1):   
+                        if l[0] == listaFiltro1[indice][0]:
+                            print('Error: Un cheque de este cliente se encuentra duplicado')
+                            exit(1)
+                        indice = indice +1
+                
+            if 'listaFiltro4' in globals() or 'listaFiltro4' in locals():
+                listaFiltro5 = listaFiltro4
+            elif 'listaFiltro3' in globals() or 'listaFiltro3' in locals():
+                listaFiltro5 = listaFiltro3
+            else:
+                listaFiltro5 = listaFiltro2
+            
+            print(listaFiltro5)
+
+
  
-
-
     else: #Chequea si el archivo existe sino avisa por pantalla y da error
         print('El archivo no existe o no ha indicado el camino hacia él correctamente')
         exit(1)
