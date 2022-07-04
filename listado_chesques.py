@@ -135,38 +135,34 @@ if 5 <= len(argumentos) <= 7: #Chequea que la cantidad de arg sea correcta
                 listaFiltro5 = listaFiltro2
             
 
-            salida = argumentos[3].upper()
-            if salida == 'PANTALLA':
-                print(listaFiltro5)
-            elif salida == 'CSV':
+            salida = argumentos[3].upper() #determino el formato de salida 
+            if salida == 'PANTALLA': #si es pantalla imprime por terminal
+                for num, l in enumerate(listaFiltro5): #recupero los cheques filtrados y los paso como string para una visual mas limpia
+                    num = ', '.join(l) 
+                    print(num)    
+            elif salida == 'CSV': #si es csv creo un timestamp actual
                 tiempo = datetime.datetime.now()
                 timestampActual = int(round(tiempo.timestamp()))
                 FName = dni + '-' + str(timestampActual) + '.csv'
-                FContenido = [['FechaOrigen','FechaPago','NumeroCuentaDestino','Valor']]
-                for index, l in enumerate(listaFiltro5):
+                FContenido = [['FechaOrigen','FechaPago','NumeroCuentaDestino','Valor']] #creo una lista con los nombres de la informacion requerida
+                for index, l in enumerate(listaFiltro5): #agrego la informacion requerida de cada cheque que cumplio con los parametros
                     index = []
                     index.append(l[6])
                     index.append(l[7])
                     index.append(l[4])
                     index.append(l[5])
                     FContenido.append(index)
-                with open(FName,'w') as f:
+                with open(FName,'w', newline='') as f: #creo el archivo y lo escribo
                     writer = csv.writer(f)
-                    for l in FContenido:
-                        writer.writerow(l)
+                    writer.writerows(FContenido)
             else:
-                print('El formato de salida indicado es inválido')
+                print('El formato de salida indicado es inválido') #si el parametro pasado en indice 3 no es valido da error
                 exit(1)
-
-
-
- 
 
 
     else: #Chequea si el archivo existe sino avisa por pantalla y da error
         print('El archivo no existe o no ha indicado el camino hacia él correctamente')
         exit(1)
-
 
 
 else: #si la cant de arg es incorrecta avisa por pantalla y da error
